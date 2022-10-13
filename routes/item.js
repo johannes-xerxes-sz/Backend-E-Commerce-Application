@@ -12,10 +12,12 @@ const {
 //root
 
 router.route('/')
-    .get(getItem)
+    .get(getItems)
     .post(postItem)
-    .delete(deleteItem)
+    .delete(deleteItems)
 
+
+    
 
     router.route('/:ItemId')
     .get(getItem)

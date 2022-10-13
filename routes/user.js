@@ -12,9 +12,9 @@ const {
 //root
 
 router.route('/')
-    .get(getUser)
+    .get(getUsers)
     .post(postUser)
-    .delete(deleteUser)
+    .delete(deleteUsers)
 
 
     router.route('/:UserId')
