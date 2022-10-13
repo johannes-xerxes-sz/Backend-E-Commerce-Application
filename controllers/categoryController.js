@@ -34,14 +34,14 @@ const updateCategory = (req, res, next) => {
     res
     .status(200)
     .setHeader('Content-Type', 'application/json')
-    .json( { success: true, msg: `delete category with id: ${req.params.categoryId}`})
+    .json( { success: true, msg: `update category with id: ${req.params.categoryId}`})
 }
 
 const deleteCategory = (req, res, next) => {
     res
     .status(200)
     .setHeader('Content-Type', 'application/json')
-    .json( { success: true, msg: `show me one category with id: ${req.params.categoryId}`})
+    .json( { success: true, msg: `delete category with id: ${req.params.categoryId}`})
 }
 
 module.exports = {

@@ -5,6 +5,10 @@ const bodyParser = require('body-parser');
 const logger = require('./middlewares/logger');
 const errorHandler = require('./middlewares/error');
 const category = require('./routes/category');
+const user = require('./routes/user');
+const item = require('./routes/item');
+
+
 
 //! To read our config values
 dotenv.config({ path: './config/config.env' });
@@ -25,6 +29,9 @@ app.use(logger);
 
 //hook up our routes
 app.use('/api/v1/category', category);
+app.use('/api/v1/item', item);
+
+app.use('/api/v1/user', user);
 
 
 app.use(errorHandler);
