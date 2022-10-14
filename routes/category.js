@@ -8,18 +8,20 @@ const {
     getCategory,
     updateCategory
 } = require('../controllers/categoryController');
+const reqLogger = require('../middlewares/reqLogger')
+const {categoryValidator} = require('../middlewares/utils/validators')
 
 //root
 
 router.route('/')
-    .get(getCategories)
-    .post(postCategory)
-    .delete(deleteCategories)
+    .get(reqLogger, getCategories)
+    .post(reqLogger, categoryValidator, postCategory)
+    .delete(reqLogger, deleteCategories)
 
 
     router.route('/:categoryId')
-    .get(getCategory)
-    .put(updateCategory)
-    .delete(deleteCategory)
+    .get(reqLogger, getCategory)
+    .put(reqLogger, updateCategory)
+    .delete(reqLogger, deleteCategory)
 
     module.exports = router;

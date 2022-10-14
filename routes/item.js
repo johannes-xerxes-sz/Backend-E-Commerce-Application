@@ -8,20 +8,22 @@ const {
     getItem,
     updateItem
 } = require('../controllers/itemController');
+const reqLogger = require('../middlewares/reqLogger')
+const {itemValidator} = require('../middlewares/utils/validators')
 
 //root
 
 router.route('/')
-    .get(getItems)
-    .post(postItem)
-    .delete(deleteItems)
+    .get(reqLogger, getItems)
+    .post(reqLogger, itemValidator, postItem)
+    .delete(reqLogger, deleteItems)
 
 
     
 
-    router.route('/:ItemId')
-    .get(getItem)
-    .put(updateItem)
-    .delete(deleteItem)
+    router.route('/:itemId')
+    .get(reqLogger, getItem)
+    .put(reqLogger, updateItem)
+    .delete(reqLogger, deleteItem)
 
     module.exports = router;

@@ -1,6 +1,15 @@
 //! for TWO OR MORE '/categoryId' endpoint
 
 const getCategories = (req, res, next) => {
+    
+    //query parameter
+    //check if array empty or not
+    if (Object.keys(req.query).length) {
+            const category = req.query.categoryName
+            console.log (`Seaching for category: ${category}`);
+    }
+
+
     res
     .status(200)
     .setHeader('Content-Type', 'application/json')
@@ -11,7 +20,7 @@ const postCategory = (req, res, next) => {
     res
     .status(201)
     .setHeader('Content-Type', 'application/json')
-    .json( { success: true, msg: 'create new catagory!'})
+    .json( { success: true, msg:`Create new category: ${req.body.categoryName} and this is for the gender: ${req.body.gender}`})
 }
 
 const deleteCategories = (req, res, next) => {

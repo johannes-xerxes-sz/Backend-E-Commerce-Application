@@ -1,17 +1,43 @@
 //! for TWO OR MORE '/ControllerId' endpoint
 
+const { query } = require("express")
+
 const getUsers = (req, res, next) => {
-    res
+
+
+    if(Object.keys(req,query).length) {
+        const { userName, gender } = req.query
+
+        const filter = [];
+
+        if (userName) filter.push(userName)
+        if (gender) filter.push(gender)
+
+        for (let i = 0; i < filter.length; i++) {
+            console.log(`Searching user(s) by: ${filter[i]}`)
+        }
+    }
+
+        res
     .status(200)
     .setHeader('Content-Type', 'application/json')
     .json( { success: true, msg: 'show me all User!'})
 }
 
-const postUser = (req, res, next) => {
+const createUser = (req, res, next) => {
     res
     .status(201)
     .setHeader('Content-Type', 'application/json')
-    .json( { success: true, msg: 'create new User!'})
+    .json( { success: true, 
+        msg: `create one with the following fields:
+        User Name: ${req.body.userName}
+        First Name: ${req.body.firstName}
+        Last Name: ${req.body.lastName}
+        Gender: ${req.body.gender}
+        Email: ${req.body.email}
+        Password: ${req.body.password}
+        Phone Number: ${req.body.phoneNumber}`
+    })
 }
 
 const deleteUsers = (req, res, next) => {
@@ -47,7 +73,7 @@ const deleteUser = (req, res, next) => {
 module.exports = {
     getUser,
     deleteUser,
-    postUser,
+    createUser,
     deleteUser,
     updateUser,
     getUsers,

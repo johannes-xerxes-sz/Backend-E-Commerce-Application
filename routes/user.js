@@ -3,23 +3,25 @@ const router = express.Router();
 const {
     getUsers,
     deleteUsers,
-    postUser,
+    createUser,
     deleteUser,
     getUser,
     updateUser
 } = require('../controllers/userController');
+const reqLogger = require('../middlewares/reqLogger')
+const {userValidator} = require('../middlewares/utils/validators')
 
 //root
 
 router.route('/')
-    .get(getUsers)
-    .post(postUser)
-    .delete(deleteUsers)
+    .get(reqLogger, getUsers)
+    .post(reqLogger, userValidator, createUser)
+    .delete(reqLogger, deleteUsers)
 
 
-    router.route('/:UserId')
-    .get(getUser)
-    .put(updateUser)
-    .delete(deleteUser)
+    router.route('/:userId')
+    .get(reqLogger, getUser)
+    .put(reqLogger, updateUser)
+    .delete(reqLogger, deleteUser)
 
     module.exports = router;
