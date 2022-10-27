@@ -17,34 +17,35 @@ const {
 } = require('../controllers/itemController');
 const reqLogger = require('../middlewares/reqLogger')
 const {itemValidator} = require('../middlewares/utils/validators')
+const protectedRoute = require('../middlewares/auth')
 
 //root
 
 router.route('/')
     .get(reqLogger, getItems)
-    .post(reqLogger, itemValidator, postItem)
-    .delete(reqLogger, deleteItems)
+    .post(reqLogger, protectedRoute, itemValidator, postItem)
+    .delete(reqLogger, protectedRoute, deleteItems)
 
 
     
 
     router.route('/:itemId')
     .get(reqLogger, getItem)
-    .put(reqLogger, updateItem)
-    .delete(reqLogger, deleteItem)
+    .put(reqLogger, protectedRoute, updateItem)
+    .delete(reqLogger, protectedRoute, deleteItem)
 
 
     router.route('/:itemId/ratings')
     .get(reqLogger, getItemRatings)
-    .post(reqLogger, postItemRating)
-    .delete(reqLogger, deleteItemRatings)
+    .post(reqLogger, protectedRoute, postItemRating)
+    .delete(reqLogger, protectedRoute, deleteItemRatings)
     
     router.route('/:itemId/ratings/:ratingId')
     .get(reqLogger, getItemRating)
-    .put(reqLogger, updateItemRating)
-    .delete(reqLogger, deleteItemRating)
+    .put(reqLogger, protectedRoute, updateItemRating)
+    .delete(reqLogger, protectedRoute, deleteItemRating)
 
     router.route('/:itemId/image')
-    .post(reqLogger, postItemImage)
+    .post(reqLogger, protectedRoute, postItemImage)
     
     module.exports = router;

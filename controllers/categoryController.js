@@ -13,10 +13,21 @@ const getCategories = async (req, res, next) => {
     if (Object.keys(req.query).length) {
 
             const {
-                category,
+                categoryName,
+                gender,
                 sortByCategory,
                 limit
             } = req.query
+
+            if (categoryName) filter.categoryName = true
+            if (gender) filter.gender = true
+            if (sortByCategory) filter.sortByCategory = true
+            
+    
+            if (limit) options.limit = limit;
+            if (sortByFirstName) options.sort = {
+                firstName: sortByFirstName === 'asc' ? 1 : -1
+            }
 
     }
 
