@@ -9,12 +9,15 @@ const {
     updateUser
 } = require('../controllers/userController');
 const reqLogger = require('../middlewares/reqLogger')
-const {userValidator} = require('../middlewares/utils/validators')
+const {
+    userValidator,
+    adminValidator
+} = require('../middlewares/utils/validators')
 
 //root
 
 router.route('/')
-    .get(reqLogger, getUsers)
+    .get(reqLogger, adminValidator, getUsers)
     .post(reqLogger, userValidator, createUser)
     .delete(reqLogger, deleteUsers)
 

@@ -7,11 +7,14 @@ const errorHandler = require('./middlewares/error');
 const category = require('./routes/category');
 const user = require('./routes/user');
 const item = require('./routes/item');
-
-
+const connectDB = require('./config/db');
+const cookieParser = require('cookie-parser');
+const fileupload = require('express-fileupload');
 
 //! To read our config values
 dotenv.config({ path: './config/config.env' });
+
+connectDB();
 
 //! initialize our express framework
 const app = express(); 
@@ -20,6 +23,12 @@ const app = express();
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
+
+//parse cookies
+app.use(cookieParser());
+
+//file upload middleware
+app.use(fileupload());
 
 //! read/parse json data
 app.use(bodyParser.json())

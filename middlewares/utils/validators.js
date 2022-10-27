@@ -24,8 +24,7 @@ const userValidator = (req, res, next) => {
             !req.body.firstName ||
             !req.body.lastName ||
             !req.body.email ||
-            !req.body.password ||
-            !req.body.phoneNumber
+            !req.body.password 
         )
         {
             res
@@ -47,10 +46,11 @@ const userValidator = (req, res, next) => {
 const itemValidator = (req, res, next) => {
     if (req.body) {
         if (
+            !req.body.itemName ||
             !req.body.itemDescription ||
             !req.body.gender ||
             !req.body.price ||
-            !req.body.category ||
+            !req.body.isClearance ||
             !req.body.colors ||
             !req.body.sizes
         ) {
@@ -67,10 +67,24 @@ const itemValidator = (req, res, next) => {
     }
 }
 
+const adminValidator = (req, res, next) => {
+    //check if admin value is true from req.user
+    if (req.user.admin) {
+        next()
+    }
+    else {
+        res
+        .status(403)
+        .setHeader('Content-Type', 'application/json')
+        .json({success: false, msg: 'Unauthorized to access this resource!'})
+    }
+}
+
 module.exports = {
     categoryValidator,
     userValidator,
-    itemValidator
+    itemValidator,
+    adminValidator
 }
 
 //params, body, query
