@@ -7,7 +7,11 @@ const {
     deleteUser,
     getUser,
     updateUser,
-    login
+    login,
+    forgotPassword,
+    resetPassword,
+    logout,
+    updatePassword
 } = require('../controllers/userController');
 const reqLogger = require('../middlewares/reqLogger')
 const {
@@ -24,6 +28,18 @@ router.route('/')
 
 router.route('/login')
     .post(reqLogger, login)
+
+router.route('/forgotpassword')
+    .post(reqLogger, forgotPassword)
+
+router.route('/resetpassword')
+    .put(reqLogger, resetPassword)
+
+router.route('/updatepassword')
+    .put(reqLogger, protectedRoute, updatePassword)
+
+router.route('/logout')
+    .get(reqLogger, protectedRoute, logout)
 
     router.route('/:userId')
     .get(reqLogger, getUser)
