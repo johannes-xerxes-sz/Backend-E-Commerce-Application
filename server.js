@@ -10,6 +10,12 @@ const item = require('./routes/item');
 const connectDB = require('./config/db');
 const cookieParser = require('cookie-parser');
 const fileupload = require('express-fileupload');
+const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
+const xss = require('xss-clean');
+const hpp = require('hpp');
+const rateLimit = require('express-rate-limit');
+const cors = require('cors');
 
 //! To read our config values
 dotenv.config({ path: './config/config.env' });
@@ -19,7 +25,7 @@ connectDB();
 //! initialize our express framework
 const app = express(); 
  
-//! user the morgan logger for development purposes ONLY
+//! use the morgan logger for development purposes ONLY
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
@@ -29,6 +35,30 @@ app.use(cookieParser());
 
 //file upload middleware
 app.use(fileupload());
+
+//sanitize our nosql injections
+app.use(mongoSanitize());
+
+//protect from cross site scripting
+app.use(xss());
+
+//protect from http parameter pollution
+app.use(hpp());
+
+// set up a rate limit for only allowing 100 request/ 10 minj
+const limiter = rateLimit({
+    windowMs: 10 * 60 * 1000,
+    max: 100
+})
+
+app.use(limiter);
+
+// app security headers
+app.use(helmet());
+
+
+//add cors protection
+app.use(cors());
 
 //! read/parse json data
 app.use(bodyParser.json())
